@@ -14,10 +14,17 @@ public class Product {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private UUID id;
+    private String id;
 
     private String name;
     private Integer price;
+
+    @PrePersist
+    public void generateId() {
+        if (this.id == null) {
+            this.id = UUID.randomUUID().toString();
+        }
+    }
 
     public Product(ProductRequestDTO data) {
         this.price = data.price();
